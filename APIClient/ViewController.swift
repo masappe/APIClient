@@ -9,6 +9,7 @@
 import UIKit
 import Alamofire
 import SwiftyJSON
+import Kingfisher
 
 class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
@@ -64,6 +65,19 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         cell?.titleLabel.text = data["title"]!
         cell?.nameLabel.text = data["id"]!
         cell?.dateLabel.text = data["date"]!
+        //Kingfisherを使用
+//        let url = URL(string: data["image"]!!)
+//        cell?.userImage.kf.setImage(with: url)
+        let url = URL(string: data["image"]!!)
+        //システムで用意してくれたキューを用いて非同期にそ処理を行う
+        //処理が重いものはスレッドを分けてプログラムを書く
+        DispatchQueue.global().async {
+            let userImage = try? Data(contentsOf: url!)
+            //UIはmainスレッドで行う
+            DispatchQueue.main.async {
+                cell?.userImage.image = UIImage(data: userImage!)
+            }
+        }
         return cell!
     }
     
@@ -88,7 +102,8 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
                 let data: [String:String] = [
                     "title" : json["title"].string!,
                     "id" : json["user"]["id"].string!,
-                    "date" : String(date)
+                    "date" : String(date),
+                    "image" : json["user"]["profile_image_url"].string!
                 ]
                 self.datas.append(data)
             }
