@@ -20,6 +20,9 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     var page = 1
     //データの読み込み状態などを示す
     var loadStatus = "init"
+    //送るurl
+    var sendUrl:String!
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,6 +41,22 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
             RunLoop.main.run(until: Date(timeIntervalSinceNow: 0.05))
         }
         tableview.reloadData()
+    }
+    //cellがタップされた時の処理
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        sendUrl = datas[indexPath.row]["url"] as? String
+        performSegue()
+    }
+    
+    func performSegue(){
+        performSegue(withIdentifier: "toNext", sender: nil)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toNext"{
+            let webViewController = segue.destination as! WebViewController
+            webViewController.readUrl = self.sendUrl
+        }
     }
     
     //テーブルの一番下まで行ったかを検知
@@ -81,6 +100,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         return cell!
     }
     
+    //データの取得
     func getdata(number:Int){
         //fetching,fullだとデータを取得しない
         guard loadStatus != "fetching" && loadStatus != "full" else{return}
@@ -103,7 +123,8 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
                     "title" : json["title"].string!,
                     "id" : json["user"]["id"].string!,
                     "date" : String(date),
-                    "image" : json["user"]["profile_image_url"].string!
+                    "image" : json["user"]["profile_image_url"].string!,
+                    "url" : json["url"].string!
                 ]
                 self.datas.append(data)
             }
