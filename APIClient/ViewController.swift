@@ -33,6 +33,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         //delegate,datasource
         tableview.delegate = self
         tableview.dataSource = self
+        tableview.sectionHeaderHeight = 40
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -47,11 +48,11 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         sendUrl = datas[indexPath.row]["url"] as? String
         performSegue()
     }
-    
+    //segueの指定
     func performSegue(){
         performSegue(withIdentifier: "toNext", sender: nil)
     }
-    
+    //遷移前の準備
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toNext"{
             let webViewController = segue.destination as! WebViewController
@@ -100,6 +101,13 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         return cell!
     }
     
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return "Qiitaの新着記事"
+    }
     //データの取得
     func getdata(number:Int){
         //fetching,fullだとデータを取得しない
