@@ -23,6 +23,9 @@ class WebViewController: UIViewController {
 
         // Do any additional setup after loading the view.
     }
+    @IBAction func back(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
     
 
 }

@@ -66,7 +66,9 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
             return
         }
         //データの取得
-        getdata(number: page)
+        DispatchQueue.global().async {
+            self.getdata(number: self.page)
+        }
         //データをし取得しきるまで待機
         while loadStatus == "fetching" {
             RunLoop.main.run(until: Date(timeIntervalSinceNow: 0.01))
@@ -95,19 +97,21 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
             let userImage = try? Data(contentsOf: url!)
             //UIはmainスレッドで行う
             DispatchQueue.main.async {
-                cell?.userImage.image = UIImage(data: userImage!)
+                if let value = userImage{
+                    cell?.userImage.image = UIImage(data: value)
+                }
             }
         }
         return cell!
     }
     
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "Qiitaの新着記事"
-    }
+//    func numberOfSections(in tableView: UITableView) -> Int {
+//        return 1
+//    }
+//
+//    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+//        return "Qiitaの新着記事"
+//    }
     //データの取得
     func getdata(number:Int){
         //fetching,fullだとデータを取得しない
@@ -143,7 +147,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         //10ページ以上読み込めないようにする
         if page >= 10{
             loadStatus = "full"
-            let alert = UIAlertController(title: "Error", message: "これ以上記事をみ読み込めません", preferredStyle: .alert)
+            let alert = UIAlertController(title: "Error", message: "これ以上記事を読み込めません", preferredStyle: .alert)
             let ok = UIAlertAction(title: "OK", style: .default, handler: nil)
             alert.addAction(ok)
             present(alert, animated: true, completion: nil)
