@@ -40,11 +40,16 @@
                                     <navigationItem title="Qiitaの新着記事" id="8Hw-9S-yDO"/>
                                 </items>
                             </navigationBar>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="lvb-0U-sV7">
+                                <rect key="frame" x="177" y="323" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="indicator" destination="lvb-0U-sV7" id="i2n-Qu-6LN"/>
                         <outlet property="tableview" destination="0Os-ob-Fmj" id="uU3-GH-lOb"/>
                         <segue destination="x3T-5n-7MN" kind="presentation" identifier="toNext" id="ZqW-PV-QcR"/>
                     </connections>
@@ -83,17 +88,22 @@
                                     </navigationItem>
                                 </items>
                             </navigationBar>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="D62-dh-BZ2">
+                                <rect key="frame" x="177" y="323" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="K8X-Mj-MLc"/>
                     </view>
                     <connections>
+                        <outlet property="indicator" destination="D62-dh-BZ2" id="1lD-Wk-7Y4"/>
                         <outlet property="wkWebView" destination="rdu-vI-3ZS" id="FHb-XK-av9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gVv-dP-U2z" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1940" y="112.89355322338831"/>
+            <point key="canvasLocation" x="2273" y="99"/>
         </scene>
     </scenes>
 </document>

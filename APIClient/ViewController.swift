@@ -13,6 +13,7 @@ import Kingfisher
 
 class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
+    @IBOutlet weak var indicator: UIActivityIndicatorView!
     @IBOutlet weak var tableview: UITableView!
     //Dictionary型を入れる配列
     var datas: [[String:String?]] = []
@@ -27,6 +28,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     override func viewDidLoad() {
         super.viewDidLoad()
         getdata(number: page)
+        indicator.startAnimating()
         //xibの登録
         let nib = UINib(nibName: "TableViewCell", bundle: nil)
         self.tableview.register(nib, forCellReuseIdentifier: "OriginalCell")
@@ -41,6 +43,8 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         while loadStatus == "fetching" || loadStatus == "init" {
             RunLoop.main.run(until: Date(timeIntervalSinceNow: 0.05))
         }
+        indicator.alpha = 0
+        indicator.stopAnimating()
         tableview.reloadData()
     }
     //cellがタップされた時の処理
